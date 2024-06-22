@@ -180,3 +180,97 @@
     ```
     True
     ```
+  
+## Timer methods
+
+Record the time it takes to execute a method or a block of code.
+
+### Methods
+
+| **Method**                | **Description**                                                                                                                                    | **Parameters**                                                                                                               | **Returns**                                                                      |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `method_timer`            | Measure method execution time.                                                                                                                     | `function` The method to measure it's time.<br>`*args` The method's arguments.<br>`**kwargs` The method's keyword arguments. | `Timer` Object that contains method execution time and results.                  |
+| `timer` decorator         | Timer decorator that measure the method execution time, and add the results to parameter, that can be accessed by the method `get_timer_results()` | `is_enabled (bool, Default: True)` If True, the timer is enabled, otherwise it is disabled.                                  | `any` Method result.                                                             |
+| `get_timer_results`       | Returns the timer results.                                                                                                                         |                                                                                                                              | `dict[list[Timer]]` The timer results.<br>`{'FILE_PATH:Class.Method: [Timer]}'`. |
+| `reset_timer_results`     | Resets the timer results.                                                                                                                          |                                                                                                                              |                                                                                  |
+| `get_max_keys`            | Returns the maximum amount of allowed keys in the timer results.                                                                                   |                                                                                                                              | `int` The maximum amount of allowed keys in the timer results.                   |
+| `set_max_keys`            | Sets the maximum amount of allowed keys in the timer results.                                                                                      | `max_keys (int)` The maximum amount of allowed keys in the timer results.                                                    |                                                                                  |
+| `get_max_results_per_key` | Returns the maximum amount of allowed results per key in the timer results.                                                                        |                                                                                                                              | `int` The maximum amount of allowed results per key in the timer results.        |
+| `set_max_results_per_key` | Sets the maximum amount of allowed results per key in the timer results.                                                                           | `max_results_per_key (int)` The maximum amount of allowed results per key in the timer results.                              |                                                                                  |
+| `with Timer() as t:`      | Context manager that times a block of code.                                                                                                        |                                                                                                                              | `Timer` Object that contains block execution time and results.                   |
+
+### Timer class
+
+| **Parameters**             | **Description**                                                             | **Type**    | **Default** |
+|----------------------------|-----------------------------------------------------------------------------|-------------|-------------|
+| `start_date_ms`            | The start date in milliseconds.                                             | `int`       |             |
+| `end_date_ms`              | The end date in milliseconds.                                               | `int`       | `None`      |
+| `execution_time_ms`        | The execution time in milliseconds.                                         | `int`       | `None`      |
+| `result`                   | The result of the method.                                                   | `any`       | `None`      |
+| `exception`                | The exception that occurred during the method execution.                    | `Exception` | `None`      |
+| `stack_trace`              | The stack trace of the exception that occurred during the method execution. | `str`       | `None`      |
+| `__enter__` and `__exit__` | Context manager methods (`with Timer() as t:`).                             |             |             |
+
+### Examples:
+
+- #### method_timer
+
+    **Code**
+    ```python
+    from from nrt_time_utils.timer import method_timer
+
+    def my_method(a, b):
+        return a + b
+
+    timer = method_timer(my_method, 1, 2)
+
+    print(timer.execution_time_ms)
+    ```
+
+    **Output**
+    ```
+    1
+    ```
+  
+- #### timer decorator
+
+    **Code**
+    ```python
+    from time import sleep  
+    from from nrt_time_utils.timer import timer, get_timer_results
+
+    @timer()
+    def my_method(a, b):
+        sleep(1)
+        return a + b
+
+    my_method(1, 2)
+  
+    timer_results = get_timer_results()
+  
+    for timer_result_list in timer_results.values():
+        print(timer_result_list[0].execution_time_ms)
+    ```
+
+    **Output**
+    ```
+    1001
+    ```
+  
+- #### with Timer() as t:
+    
+    **Code**
+    ```python
+    from time import sleep
+    from from nrt_time_utils.timer import Timer
+
+    with Timer() as t:
+        sleep(1)
+  
+    print(t.execution_time_ms)
+    ```
+
+    **Output**
+    ```
+    1000
+    ```
