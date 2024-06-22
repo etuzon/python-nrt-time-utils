@@ -7,7 +7,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/nrt-time-utils?color=blue&style=plastic)
 ![PyPI - Downloads](https://img.shields.io/pypi/dd/nrt-time-utils?style=plastic)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/nrt-time-utils?color=yellow&style=plastic)
-[![Coverage Status](https://coveralls.io/repos/github/etuzon/python-nrt-time-utils/badge.svg)](https://coveralls.io/github/etuzon/pytohn-nrt-time-utils)
+[![Coverage Status](https://coveralls.io/repos/github/etuzon/python-nrt-time-utils/badge.svg)](https://coveralls.io/github/etuzon/python-nrt-time-utils)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/etuzon/python-nrt-time-utils?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/etuzon/python-nrt-time-utils?style=plastic)
 [![DeepSource](https://app.deepsource.com/gh/etuzon/python-nrt-time-utils.svg/?label=active+issues&show_trend=false&token=eTDGJ29l60LGTuhQtl6DQqJG)](https://app.deepsource.com/gh/etuzon/python-nrt-time-utils/)

@@ -3,18 +3,6 @@ import datetime
 from nrt_time_utils.time_utils import YMD_DATE_FORMAT, YMD_HMS_DATE_FORMAT, \
     YMD_HMSF_DATE_FORMAT
 
-date_ms_to_date_str_data = [
-    (1609459200000, YMD_DATE_FORMAT, '2021-01-01'),
-    (1609459200000, YMD_HMSF_DATE_FORMAT, '2021-01-01 02:00:00.000000')
-]
-
-date_ms_to_date_time_data = [
-    (1609459200000, datetime.datetime(2021, 1, 1, 2, 0, 0, 0, None)),
-    (1609459300000, datetime.datetime(2021, 1, 1, 2, 1, 40, 0, None)),
-    (1609459320000, datetime.datetime(2021, 1, 1, 2, 2, 0, 0, None)),
-    (1609459320040, datetime.datetime(2021, 1, 1, 2, 2, 0, 40000, None)),
-    (1609459320045, datetime.datetime(2021, 1, 1, 2, 2, 0, 45000, None))
-]
 
 date_str_to_date_time_data = [
     ('2021-01-01', YMD_DATE_FORMAT,

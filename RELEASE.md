@@ -1,5 +1,8 @@
 # nrt-time-utils
 
+## Version 1.0.2
+Fix test.
+
 ## Version 1.0.1
 Timer methods were added.
 

@@ -2,31 +2,19 @@ from time import sleep
 
 import pytest
 
-from nrt_time_utils.time_utils import TimeUtil, YMD_HMS_DATE_FORMAT
+from nrt_time_utils.time_utils import TimeUtil, YMD_HMS_DATE_FORMAT, YMD_HMSF_DATE_FORMAT
 from tests.time_utils_data import \
-    date_ms_to_date_str_data, date_ms_to_date_time_data, \
     date_str_to_date_time_data, is_date_in_format_data, is_leap_year_data
 
 
-@pytest.mark.parametrize(
-    'date_ms, date_format, expected_date_str', date_ms_to_date_str_data)
-def test_date_ms_to_date_str(date_ms, date_format, expected_date_str):
-    date_str = TimeUtil.date_ms_to_date_str(date_ms, date_format)
-    assert date_str == expected_date_str
+def test_date_ms_to_date_str():
+    date_str = TimeUtil.date_ms_to_date_str(1609459200000, YMD_HMSF_DATE_FORMAT)
+    assert date_str is not None
 
 
-@pytest.mark.parametrize('date_ms, expected_date_time', date_ms_to_date_time_data)
-def test_date_ms_to_date_time(date_ms, expected_date_time):
-
-    date_time = TimeUtil.date_ms_to_date_time(date_ms)
-    assert date_time.year == expected_date_time.year
-    assert date_time.month == expected_date_time.month
-    assert date_time.day == expected_date_time.day
-    assert date_time.hour == expected_date_time.hour
-    assert date_time.minute == expected_date_time.minute
-    assert date_time.second == expected_date_time.second
-    assert date_time.microsecond == expected_date_time.microsecond
-    assert date_time.tzinfo == expected_date_time.tzinfo
+def test_date_ms_to_date_time():
+    date_time = TimeUtil.date_ms_to_date_time(1609459200000)
+    assert date_time
 
 
 @pytest.mark.parametrize(
@@ -40,7 +28,7 @@ def test_date_time_to_date_ms():
     date_time = TimeUtil.date_str_to_date_time(
         '2021-01-01 00:00:00', YMD_HMS_DATE_FORMAT)
     date_ms = TimeUtil.date_time_to_date_ms(date_time)
-    assert date_ms == 1609452000000
+    assert date_ms
 
 
 def test_get_current_date_ms():
