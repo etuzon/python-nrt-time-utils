@@ -64,9 +64,8 @@ def set_max_results_per_key(new_max_results_per_key: int):
 
 
 def reset_timer_results():
-    global __timer_results
-
     with __lock:
+        global __timer_results
         __timer_results = {}
 
 
@@ -100,8 +99,6 @@ def timer(is_enabled: bool = True):
             timer_result = method_timer(func, *args, **kwargs)
 
             if is_enabled:
-                global __timer_results
-
                 func_file = inspect.getfile(func)
                 func_qualname = func.__qualname__
                 key = f'{func_file}:{func_qualname}'

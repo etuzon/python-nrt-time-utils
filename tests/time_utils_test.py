@@ -2,9 +2,11 @@ from time import sleep
 
 import pytest
 
-from nrt_time_utils.time_utils import TimeUtil, YMD_HMS_DATE_FORMAT, YMD_HMSF_DATE_FORMAT
+from nrt_time_utils.time_utils import \
+    TimeUtil, YMD_HMS_DATE_FORMAT, YMD_HMSF_DATE_FORMAT
 from tests.time_utils_data import \
-    date_str_to_date_time_data, is_date_in_format_data, is_leap_year_data
+    date_str_to_date_time_data, is_date_in_format_data, is_leap_year_data, \
+    day_start_date_ms_data, day_end_date_ms_data, timezone_date
 
 
 def test_date_ms_to_date_str():
@@ -13,8 +15,14 @@ def test_date_ms_to_date_str():
 
 
 def test_date_ms_to_date_time():
-    date_time = TimeUtil.date_ms_to_date_time(1609459200000)
+    date_time = TimeUtil.date_ms_to_date_time(1609459200000, 'UTC')
     assert date_time
+    assert date_time.year == 2021
+    assert date_time.month == 1
+    assert date_time.day == 1
+    assert date_time.hour == 0
+    assert date_time.minute == 0
+    assert date_time.second == 0
 
 
 @pytest.mark.parametrize(
@@ -37,6 +45,34 @@ def test_get_current_date_ms():
     sleep(1)
     date_ms_2 = TimeUtil.get_current_date_ms()
     assert date_ms_1 < date_ms_2 < date_ms_1 + 5000
+
+
+@pytest.mark.parametrize(
+    'date_ms, expected_date_ms, tz', day_end_date_ms_data)
+def test_get_day_end_date_ms(date_ms, expected_date_ms, tz):
+    assert TimeUtil.get_day_end_date_ms(date_ms, tz) == expected_date_ms
+
+
+@pytest.mark.parametrize(
+    'date_ms, expected_date_ms, tz', day_start_date_ms_data)
+def test_get_day_start_date_ms(date_ms, expected_date_ms, tz):
+    assert TimeUtil.get_day_start_date_ms(date_ms, tz) == expected_date_ms
+
+
+@pytest.mark.parametrize('timezone_str, expected_tz', timezone_date)
+def test_get_timezone(timezone_str, expected_tz):
+    assert TimeUtil.get_timezone(timezone_str) == expected_tz
+
+
+def test_get_timezone_raise_exception_negative():
+    with pytest.raises(ValueError):
+        TimeUtil.get_timezone('Unknown')
+
+    with pytest.raises(ValueError):
+        TimeUtil.get_timezone('')
+
+    with pytest.raises(ValueError):
+        TimeUtil.get_timezone('UTC+1')
 
 
 def test_get_timezone_offset_hours():
