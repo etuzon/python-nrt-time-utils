@@ -20,6 +20,7 @@
 |-----------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
 | `date_ms_to_date_str`       | Converts a date in milliseconds to a date string.      | `date_ms (int)` The date in milliseconds to convert to a date string.<br>`date_format (str, Default: YMD_HMSF_DATE_FORMAT)` The format string to convert the date to.<br>`tz (Default: None)` Timezone. | `str` The date string.                                             |
 | `date_ms_to_date_time`      | Converts a date in milliseconds to a date time object. | `date_ms (int)` The date in milliseconds to convert to a date time object.<br>`tz (Default: None)` Timezone.                                                                                            | `datetime` The date time object.                                   |
+| `date_str_to_date_ms`       | Converts a date string to a date in milliseconds.      | `date_str (str)` The date string to convert to a date in milliseconds.<br>`date_format (str, Default: YMD_HMSF_DATE_FORMAT)` The format string to convert the date to.                                  | `int` The date in milliseconds.                                    |
 | `date_str_to_date_time`     | Converts a date string to a date time object.          | `date_str (str)` The date string to convert to a date time object.<br>`date_format (str, Default: YMD_HMSF_DATE_FORMAT)` The format string to convert the date to.                                      | `datetime` The date time object.                                   |
 | `date_time_to_date_ms`      | Converts a date time object to a date in milliseconds. | `dt (datetime)` The date time object to convert to a date in milliseconds.                                                                                                                              | `int` The date in milliseconds.                                    |
 | `get_current_date_ms`       | Returns the current date in milliseconds.              |                                                                                                                                                                                                         | `int` The current date in milliseconds.                            |
@@ -65,6 +66,24 @@
     **Output**
     ```
     2021-01-01 00:00:00+00:00
+    ```
+
+- #### TimeUtil.date_str_to_date_ms
+     
+    **Code**
+    ```python
+    from nrt_time_utils.time_utils import TimeUtil, YMD_HMSF_Z_DATE_FORMAT
+
+    # Convert a date string to a date in milliseconds
+    date_ms = \
+        TimeUtil.date_str_to_date_ms(
+            '2021-01-01 02:02:00.000000 UTC', YMD_HMSF_Z_DATE_FORMAT)
+
+    print(date_ms)
+    ```
+    **Output**
+    ```
+    1609466520000
     ```
   
 - #### TimeUtil.date_str_to_date_time

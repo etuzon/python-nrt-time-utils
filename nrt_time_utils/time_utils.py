@@ -1,3 +1,5 @@
+import re
+
 import time
 from datetime import datetime
 
@@ -6,9 +8,13 @@ import pytz
 from nrt_time_utils.timezone import TIMEZONES_DICT
 
 YMD_HMSF_DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
+YMD_HMSF_Z_DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f %Z'
 YMD_HMS_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+YMD_HMS_Z_DATE_FORMAT = '%Y-%m-%d %H:%M:%S %Z'
 YMD_T_HMS_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
+YMD_T_HMS_Z_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S %Z'
 YMD_DATE_FORMAT = '%Y-%m-%d'
+YMD_Z_DATE_FORMAT = '%Y-%m-%d %Z'
 YM_DATE_FORMAT = '%Y-%m'
 Y_DATE_FORMAT = '%Y'
 
@@ -30,6 +36,12 @@ class TimeUtil:
         return cls.date_ms_to_date_time(date_ms, tz).strftime(date_format)
 
     @classmethod
+    def date_str_to_date_ms(
+            cls, date_str: str, date_format: str = YMD_HMSF_DATE_FORMAT) -> int:
+        return \
+            cls.date_time_to_date_ms(cls.date_str_to_date_time(date_str, date_format))
+
+    @classmethod
     def date_ms_to_date_time(cls, date_ms: int, tz=None) -> datetime:
         tz = cls.get_timezone(tz) if isinstance(tz, str) else tz
 
@@ -41,7 +53,13 @@ class TimeUtil:
     def date_str_to_date_time(
             date_str: str, date_format: str = YMD_HMSF_DATE_FORMAT) -> datetime:
 
-        return datetime.strptime(date_str, date_format)
+        dt = datetime.strptime(date_str, date_format)
+
+        if '%Z' in date_format:
+            tz = TimeUtil.__parse_timezone_from_str(date_str)
+            dt = dt.replace(tzinfo=tz)
+
+        return dt
 
     @staticmethod
     def date_time_to_date_ms(dt: datetime) -> int:
@@ -65,6 +83,11 @@ class TimeUtil:
 
     @staticmethod
     def get_timezone(timezone_str: str):
+        tz = TIMEZONES_DICT.get(timezone_str)
+
+        if tz:
+            timezone_str = tz['name']
+
         try:
             return pytz.timezone(timezone_str)
         except pytz.exceptions.UnknownTimeZoneError:
@@ -101,3 +124,14 @@ class TimeUtil:
             return False
 
         return True
+
+    @classmethod
+    def __parse_timezone_from_str(cls, date_str: str):
+        tz_pattern = re.compile(r'.*?\b([A-Za-z_]{3,}(?:/[A-Za-z_]{3,})?)\b')
+        match = tz_pattern.match(date_str)
+
+        for tz_str in match.groups():
+            if tz_str:
+                return cls.get_timezone(tz_str)
+
+        raise ValueError(f'Timezone was not found in {date_str}')
