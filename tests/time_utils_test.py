@@ -3,10 +3,11 @@ from time import sleep
 import pytest
 
 from nrt_time_utils.time_utils import \
-    TimeUtil, YMD_HMS_DATE_FORMAT, YMD_HMSF_DATE_FORMAT
+    TimeUtil, YMD_HMS_DATE_FORMAT, YMD_HMSF_DATE_FORMAT, YMD_Z_DATE_FORMAT
 from tests.time_utils_data import \
     date_str_to_date_time_data, is_date_in_format_data, is_leap_year_data, \
-    day_start_date_ms_data, day_end_date_ms_data, timezone_date
+    day_start_date_ms_data, day_end_date_ms_data, \
+    timezone_date, date_str_to_date_ms_data
 
 
 def test_date_ms_to_date_str():
@@ -23,6 +24,23 @@ def test_date_ms_to_date_time():
     assert date_time.hour == 0
     assert date_time.minute == 0
     assert date_time.second == 0
+
+
+@pytest.mark.parametrize(
+    'date_str, date_format, expected_date_ms', date_str_to_date_ms_data)
+def test_date_str_to_date_ms(date_str, date_format, expected_date_ms):
+    date_ms = TimeUtil.date_str_to_date_ms(date_str, date_format)
+    assert date_ms == expected_date_ms
+
+
+def test_date_str_to_date_ms_unknown_timezone_negative():
+    with pytest.raises(ValueError):
+        TimeUtil.date_str_to_date_ms('2021-01-01 UNKNOWN', YMD_Z_DATE_FORMAT)
+
+
+def test_date_str_to_date_ms_no_timezone_negative():
+    with pytest.raises(ValueError):
+        TimeUtil.date_str_to_date_ms('2021-01-01', YMD_Z_DATE_FORMAT)
 
 
 @pytest.mark.parametrize(

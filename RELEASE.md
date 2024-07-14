@@ -1,5 +1,8 @@
 # nrt-time-utils
 
+## Version 1.0.4
+TimeUtils methods were added.
+
 ## Version 1.0.3
 
 - TimeUtils methods were added/updated.
