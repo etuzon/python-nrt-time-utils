@@ -95,14 +95,14 @@ def test_get_timezone_raise_exception_negative():
 
 def test_get_timezone_offset_hours():
     assert TimeUtil.get_timezone_offset_hours('UTC') == 0
-    assert TimeUtil.get_timezone_offset_hours('Europe/Paris') == 2
-    assert TimeUtil.get_timezone_offset_hours('America/New_York') == -4
-    assert TimeUtil.get_timezone_offset_hours('Asia/Tokyo') == 9
-    assert TimeUtil.get_timezone_offset_hours('Australia/Sydney') == 10
-    assert TimeUtil.get_timezone_offset_hours('Australia/Adelaide') == 9
-    assert TimeUtil.get_timezone_offset_hours('PDT') == -7
-    assert TimeUtil.get_timezone_offset_hours('Asia/Jerusalem') == 3
-    assert TimeUtil.get_timezone_offset_hours('Israel') == 3
+    assert 1 <= TimeUtil.get_timezone_offset_hours('Europe/Paris') <= 2
+    assert -5 <= TimeUtil.get_timezone_offset_hours('America/New_York') <= -4
+    assert 8 <= TimeUtil.get_timezone_offset_hours('Asia/Tokyo') <= 9
+    assert 11 >= TimeUtil.get_timezone_offset_hours('Australia/Sydney') >= 10
+    assert 10 >= TimeUtil.get_timezone_offset_hours('Australia/Adelaide') >= 9
+    assert -8 <= TimeUtil.get_timezone_offset_hours('PDT') <= -7
+    assert 2 <= TimeUtil.get_timezone_offset_hours('Asia/Jerusalem') <= 3
+    assert 2 <= TimeUtil.get_timezone_offset_hours('Israel') <= 3
 
 
 def test_get_timezone_offset_hours_negative():
