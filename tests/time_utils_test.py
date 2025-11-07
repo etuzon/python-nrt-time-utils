@@ -26,8 +26,7 @@ def test_date_ms_to_date_time():
     assert date_time.second == 0
 
 
-@pytest.mark.parametrize(
-    'date_str, date_format, expected_date_ms', date_str_to_date_ms_data)
+@pytest.mark.parametrize('date_str, date_format, expected_date_ms', date_str_to_date_ms_data)
 def test_date_str_to_date_ms(date_str, date_format, expected_date_ms):
     date_ms = TimeUtil.date_str_to_date_ms(date_str, date_format)
     assert date_ms == expected_date_ms
@@ -43,16 +42,14 @@ def test_date_str_to_date_ms_no_timezone_negative():
         TimeUtil.date_str_to_date_ms('2021-01-01', YMD_Z_DATE_FORMAT)
 
 
-@pytest.mark.parametrize(
-    'date_str, date_format, expected_date_time', date_str_to_date_time_data)
+@pytest.mark.parametrize('date_str, date_format, expected_date_time', date_str_to_date_time_data)
 def test_date_str_to_date_time(date_str, date_format, expected_date_time):
     dt = TimeUtil.date_str_to_date_time(date_str, date_format)
     assert dt == expected_date_time
 
 
 def test_date_time_to_date_ms():
-    date_time = TimeUtil.date_str_to_date_time(
-        '2021-01-01 00:00:00', YMD_HMS_DATE_FORMAT)
+    date_time = TimeUtil.date_str_to_date_time('2021-01-01 00:00:00', YMD_HMS_DATE_FORMAT)
     date_ms = TimeUtil.date_time_to_date_ms(date_time)
     assert date_ms
 
@@ -65,14 +62,12 @@ def test_get_current_date_ms():
     assert date_ms_1 < date_ms_2 < date_ms_1 + 5000
 
 
-@pytest.mark.parametrize(
-    'date_ms, expected_date_ms, tz', day_end_date_ms_data)
+@pytest.mark.parametrize('date_ms, expected_date_ms, tz', day_end_date_ms_data)
 def test_get_day_end_date_ms(date_ms, expected_date_ms, tz):
     assert TimeUtil.get_day_end_date_ms(date_ms, tz) == expected_date_ms
 
 
-@pytest.mark.parametrize(
-    'date_ms, expected_date_ms, tz', day_start_date_ms_data)
+@pytest.mark.parametrize('date_ms, expected_date_ms, tz', day_start_date_ms_data)
 def test_get_day_start_date_ms(date_ms, expected_date_ms, tz):
     assert TimeUtil.get_day_start_date_ms(date_ms, tz) == expected_date_ms
 
@@ -121,8 +116,7 @@ def test_is_timeout_ms():
     assert TimeUtil.is_timeout_ms(start_time_ms, timeout_ms)
 
 
-@pytest.mark.parametrize(
-    'date_str, date_format, expected_result', is_date_in_format_data)
+@pytest.mark.parametrize('date_str, date_format, expected_result', is_date_in_format_data)
 def test_is_date_in_format(date_str, date_format, expected_result):
     assert TimeUtil.is_date_in_format(date_str, date_format) == expected_result
 

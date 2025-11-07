@@ -38,20 +38,16 @@ class TimeUtil:
     @classmethod
     def date_str_to_date_ms(
             cls, date_str: str, date_format: str = YMD_HMSF_DATE_FORMAT) -> int:
-        return \
-            cls.date_time_to_date_ms(cls.date_str_to_date_time(date_str, date_format))
+        return cls.date_time_to_date_ms(cls.date_str_to_date_time(date_str, date_format))
 
     @classmethod
     def date_ms_to_date_time(cls, date_ms: int, tz=None) -> datetime:
         tz = cls.get_timezone(tz) if isinstance(tz, str) else tz
 
-        return \
-            datetime.fromtimestamp(date_ms / 1000, tz) \
-            if date_ms is not None else None
+        return datetime.fromtimestamp(date_ms / 1000, tz) if date_ms is not None else None
 
     @staticmethod
-    def date_str_to_date_time(
-            date_str: str, date_format: str = YMD_HMSF_DATE_FORMAT) -> datetime:
+    def date_str_to_date_time(date_str: str, date_format: str = YMD_HMSF_DATE_FORMAT) -> datetime:
 
         dt = datetime.strptime(date_str, date_format)
 
