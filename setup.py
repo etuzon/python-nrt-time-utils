@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
-
 import nrt_time_utils
+
 
 PATH = os.path.dirname(__file__)
 
@@ -18,8 +18,7 @@ setup(
     author_email='eyal.tuzon.dev@gmail.com',
     description='Time utilities for Python',
     keywords='python python3 python-3 tool tools time utilities utils util'
-             ' nrt nrt-utils time-utils time-utilities nrt-time-utils'
-             ' nrt-time-utilities',
+             ' nrt nrt-utils time-utils time-utilities nrt-time-utils nrt-time-utilities',
     long_description_content_type='text/markdown',
     long_description=readme,
     url='https://github.com/etuzon/python-nrt-time-utils',
@@ -32,6 +31,7 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
